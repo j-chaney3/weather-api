@@ -1,11 +1,14 @@
 import React from 'react';
-import CoordinatesConverter from './components/CoordinatesConverter';
 import './App.css';
+//import { Routes, Route } from 'react-router-dom';
+
+//pages
+import HomePage from './pages/HomePage';
 
 function App() {
 	return (
 		<div className="App">
-			<CoordinatesConverter />
+			<HomePage />
 		</div>
 	);
 }
