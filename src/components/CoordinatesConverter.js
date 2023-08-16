@@ -24,12 +24,12 @@ const CoordinatesConverter = () => {
 				value={zipcode}
 				onChange={(event) => setZipcode(event.target.value)}
 			/>
-			<button onClick={handleConvertClick}>Convert</button>
-			<div>
-				Latitude: {latitude}
-				<br />
-				Longitude: {longitude}
-			</div>
+			<button
+				onClick={handleConvertClick}
+				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4"
+			>
+				Convert
+			</button>
 		</div>
 	);
 };
