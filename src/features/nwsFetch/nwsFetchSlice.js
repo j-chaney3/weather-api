@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const email = process.env.REACT_APP_DEV_EMAIL;
 
-export const fetchNWSPoints = createAsyncThunk('NWSPoints, fetchNWSPoints', async (coords) => {
+export const fetchNWSPoints = createAsyncThunk('NWSPoints/fetchNWSPoints', async (coords) => {
 	try {
 		const userAgent = `NWS Portfolio Project, ${email}`;
 		const headers = new Headers();
@@ -51,15 +51,6 @@ export const NWSSlice = createSlice({
 			state.forecastHourly = action.payload.forecastHourly;
 			state.city = action.payload.relativeLocation.properties.city;
 			state.state = action.payload.relativeLocation.properties.state;
-
-			console.log(`Forecast Info: \n
-                        gridID: ${state.gridId} \n
-                        gridX: ${state.gridX} \n
-                        gridY: ${state.gridY} \n 
-                        forecast: ${state.forecast} \n
-                        forecast hourly: ${state.forecastHourly} \n
-                        city: ${state.city} \n
-                        state: ${state.state}`);
 		},
 		[fetchNWSPoints.rejected]: (state, action) => {
 			state.isLoading = false;
