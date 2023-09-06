@@ -93,10 +93,10 @@ const ForecastFetch = () => {
 					Daily
 				</button>
 
+				<div className="mb-5">
+					Low: {low} / High: {high}
+				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-3">
-					<div className="mb-5">
-						Low: {low} / High: {high}
-					</div>
 					{hourly.map((period, index) => (
 						<div key={index} className="flex items-center">
 							<div className="container mx-auto px-20 mb-5 w-9/10">
