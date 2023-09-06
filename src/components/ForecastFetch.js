@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
-import { fetchForecastHourly, select24hours } from '../features/nwsFetch/forecastHourlyFetchSlice';
+import { fetchForecastHourly, select24hours, selectTemps } from '../features/nwsFetch/forecastHourlyFetchSlice';
 
 const ForecastFetch = () => {
 	const [forecastType, setForecastType] = useState('hourly');
 	const dispatch = useDispatch();
 	const { latitude, longitude } = useSelector((state) => state.coordinates);
-	const { city, state, gridX, gridY, gridId } = useSelector((state) => state.NWSPoints);
+	const { city, state, gridX, gridY, gridId, isLoading, errMsg } = useSelector((state) => state.NWSPoints);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -18,14 +18,16 @@ const ForecastFetch = () => {
 	}, [dispatch, latitude, longitude]);
 
 	useEffect(() => {
-		if (gridX && gridY && gridId && forecastType === 'hourly') {
+		if (gridX && gridY && gridId) {
 			const url = `https://api.weather.gov/gridpoints/${gridId}/${gridX},${gridY}/forecast/hourly`;
+			console.log('Fetching hourly forecast with URL:', url);
 			dispatch(fetchForecastHourly(url));
 		}
 	}, [dispatch, gridX, gridY, gridId]);
 
-	//map 24 periods
+	//selectors
 	const hourly = useSelector(select24hours);
+	const tempArray = useSelector(selectTemps);
 
 	//date time format conversion
 	const formatTime = (isoTime) => {
@@ -39,12 +41,30 @@ const ForecastFetch = () => {
 		return date.toLocaleTimeString(undefined, options);
 	};
 
+	const lowHigh = (array) => {
+		const sort = [...array].sort();
+		if (sort.length) {
+			return {
+				low: sort[0],
+				high: sort[sort.length - 1],
+			};
+		}
+	};
+
 	if (!latitude && !longitude) {
 		return <div>Please enter your zipcode to see the current forecast.</div>;
+	} else if (errMsg) {
+		return <div>Error fetching forecast: {errMsg}</div>;
+	} else if (isLoading) {
+		return (
+			<div>
+				<h1>Loading....</h1>
+			</div>
+		);
 	}
+	if (forecastType === 'hourly' && !isLoading) {
+		const { low, high } = lowHigh(tempArray);
 
-	//show hourly
-	if (forecastType === 'hourly') {
 		return (
 			<div>
 				<h1>
@@ -52,6 +72,9 @@ const ForecastFetch = () => {
 				</h1>
 				<p>Latitude: {latitude}</p>
 				<p>Longitude: {longitude}</p>
+				<p>
+					X:{gridX} Y:{gridY} Id:{gridId}
+				</p>
 				<br />
 				<button
 					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 my-4"
@@ -71,6 +94,9 @@ const ForecastFetch = () => {
 				</button>
 
 				<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-3">
+					<div className="mb-5">
+						Low: {low} / High: {high}
+					</div>
 					{hourly.map((period, index) => (
 						<div key={index} className="flex items-center">
 							<div className="container mx-auto px-20 mb-5 w-9/10">
@@ -87,11 +113,11 @@ const ForecastFetch = () => {
 									</p>
 									<p className="w-full sm:w-48 block leading-normal text-gray-800 text-md mb-3 text-s text-left">
 										Chance of Precipitation: {period.probabilityOfPrecipitation.value}% <br />
-										Temperature: {period.temperature}F
+										Temperature: {period.temperature}°F
 									</p>
 									<div className="mx-auto relative text-center">
 										<p className="text-xs text-gray-400 mr-1 text-center">
-											{formatTime(period.startTime)} to {formatTime(period.endTime)}
+											{formatTime(period.startTime)}
 										</p>
 									</div>
 								</div>
