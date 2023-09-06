@@ -23,8 +23,11 @@ export const fetchForecastHourly = createAsyncThunk('forecastHourly/fetchForecas
 });
 
 const initialState = {
+	isLoading: true,
 	updated: '',
 	periods: [],
+	errMsg: '',
+	temps: [],
 };
 
 export const forecastHourlySlice = createSlice({
@@ -36,10 +39,11 @@ export const forecastHourlySlice = createSlice({
 			state.isLoading = true;
 		},
 		[fetchForecastHourly.fulfilled]: (state, action) => {
-			state.loading = false;
+			state.isLoading = false;
 			state.errMsg = '';
 			state.updated = action.payload.updated;
 			state.periods = action.payload.periods;
+			state.temps = action.payload.periods.temperature;
 		},
 		[fetchForecastHourly.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -50,6 +54,11 @@ export const forecastHourlySlice = createSlice({
 
 export const select24hours = (state) => {
 	return state.forecastHourly.periods.slice(0, 24);
+};
+
+export const selectTemps = (state) => {
+	let tempSubsection = state.forecastHourly.periods.slice(0, 24);
+	return tempSubsection.map((period) => period.temperature);
 };
 
 export const { setGridPoints } = forecastHourlySlice.actions;
