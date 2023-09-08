@@ -1,6 +1,5 @@
 export const lowHigh = (temps) => {
 	const sort = [...temps].sort();
-	console.log(sort);
 	if (sort.length) {
 		return {
 			low: sort[0],
