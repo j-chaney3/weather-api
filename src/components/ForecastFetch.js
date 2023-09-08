@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastHourly, select24hours, selectTemps } from '../features/nwsFetch/forecastHourlyFetchSlice';
 
+//imported functions
+import { lowHigh } from '../utilities/lowHigh';
+import { formatTime } from '../utilities/dateTimeFormat';
+
 const ForecastFetch = () => {
 	const [forecastType, setForecastType] = useState('hourly');
 	const dispatch = useDispatch();
@@ -25,36 +29,8 @@ const ForecastFetch = () => {
 		}
 	}, [dispatch, gridX, gridY, gridId]);
 
-	//date time format conversion
-	const formatTime = (isoTime) => {
-		const date = new Date(isoTime);
-		const options = {
-			hour: 'numeric',
-			minute: 'numeric',
-			hour12: true,
-		};
-
-		return date.toLocaleTimeString(undefined, options);
-	};
-
 	const hourly = useSelector(select24hours);
 	const tempArray = useSelector(selectTemps);
-
-	const lowHigh = (temps) => {
-		const sort = [...temps].sort();
-		console.log(sort);
-		if (sort.length) {
-			return {
-				low: sort[0],
-				high: sort[sort.length - 1],
-			};
-		} else {
-			return {
-				low: 'unavailable',
-				high: 'unavailable',
-			};
-		}
-	};
 
 	if (!latitude && !longitude) {
 		return <div>Please enter your zipcode to see the current forecast.</div>;
