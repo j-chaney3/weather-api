@@ -25,10 +25,6 @@ const ForecastFetch = () => {
 		}
 	}, [dispatch, gridX, gridY, gridId]);
 
-	//selectors
-	const hourly = useSelector(select24hours);
-	const tempArray = useSelector(selectTemps);
-
 	//date time format conversion
 	const formatTime = (isoTime) => {
 		const date = new Date(isoTime);
@@ -41,12 +37,21 @@ const ForecastFetch = () => {
 		return date.toLocaleTimeString(undefined, options);
 	};
 
-	const lowHigh = (array) => {
-		const sort = [...array].sort();
+	const hourly = useSelector(select24hours);
+	const tempArray = useSelector(selectTemps);
+
+	const lowHigh = (temps) => {
+		const sort = [...temps].sort();
+		console.log(sort);
 		if (sort.length) {
 			return {
 				low: sort[0],
 				high: sort[sort.length - 1],
+			};
+		} else {
+			return {
+				low: 'unavailable',
+				high: 'unavailable',
 			};
 		}
 	};
@@ -62,6 +67,7 @@ const ForecastFetch = () => {
 			</div>
 		);
 	}
+
 	if (forecastType === 'hourly' && !isLoading) {
 		const { low, high } = lowHigh(tempArray);
 
@@ -72,9 +78,7 @@ const ForecastFetch = () => {
 				</h1>
 				<p>Latitude: {latitude}</p>
 				<p>Longitude: {longitude}</p>
-				<p>
-					X:{gridX} Y:{gridY} Id:{gridId}
-				</p>
+
 				<br />
 				<button
 					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 my-4"
