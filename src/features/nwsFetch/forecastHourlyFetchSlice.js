@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 
 const email = process.env.REACT_APP_DEV_EMAIL;
 
@@ -52,14 +52,12 @@ export const forecastHourlySlice = createSlice({
 	},
 });
 
-export const select24hours = (state) => {
-	return state.forecastHourly.periods.slice(0, 24);
-};
+const selectPeriods = (state) => state.forecastHourly.periods;
 
-export const selectTemps = (state) => {
-	let tempSubsection = state.forecastHourly.periods.slice(0, 24);
-	return tempSubsection.map((period) => period.temperature);
-};
+export const select24hours = createSelector([selectPeriods], (periods) => periods.slice(0, 24));
+export const selectTemps = createSelector([selectPeriods], (periods) =>
+	periods.slice(0, 24).map((period) => period.temperature)
+);
 
 export const { setGridPoints } = forecastHourlySlice.actions;
 export const forecastHourlyReducer = forecastHourlySlice.reducer;
