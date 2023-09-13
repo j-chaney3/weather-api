@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 
 const email = process.env.REACT_APP_DEV_EMAIL;
 
@@ -14,7 +14,7 @@ export const fetchForecastDaily = createAsyncThunk(`forecastDaily/fetchForecastD
 		if (!response.ok) {
 			throw new Error(`Network response not okay`);
 		}
-
+		console.log(url);
 		const data = await response.json();
 		return data.properties;
 	} catch (error) {
@@ -48,6 +48,11 @@ export const forecastDailySlice = createSlice({
 			state.errMsg = action.err ? action.error.errMsg : 'Fetch failed';
 		},
 	},
+});
+
+const selectPeriods = (state) => state.forecastDaily.periods;
+export const selectDaily = createSelector([selectPeriods], (periods) => {
+	return periods;
 });
 
 export const forecastDailyReducer = forecastDailySlice.reducer;
