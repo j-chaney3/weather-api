@@ -8,3 +8,13 @@ export const formatTime = (isoTime) => {
 
 	return date.toLocaleTimeString(undefined, options);
 };
+
+export const formatDate = (isoTime) => {
+	const date = new Date(isoTime);
+	const options = {
+		month: 'short',
+		day: 'numeric',
+	};
+
+	return date.toLocaleDateString(undefined, options);
+};
