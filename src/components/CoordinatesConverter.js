@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchCoordinates } from '../features/coordinates/coordinatesSlice';
 
 const CoordinatesConverter = () => {
 	const dispatch = useDispatch();
-	const { latitude, longitude } = useSelector((state) => state.coordinates);
+	//const { latitude, longitude } = useSelector((state) => state.coordinates);
 
 	const [zipcode, setZipcode] = useState('');
 
