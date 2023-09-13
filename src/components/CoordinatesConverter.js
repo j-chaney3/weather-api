@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCoordinates } from '../features/coordinates/coordinatesSlice';
 
@@ -28,7 +28,7 @@ const CoordinatesConverter = () => {
 				onClick={handleConvertClick}
 				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4"
 			>
-				Convert
+				Check Weather!
 			</button>
 		</div>
 	);
