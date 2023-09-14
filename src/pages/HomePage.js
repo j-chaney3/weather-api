@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import CoordinatesConverter from '../components/CoordinatesConverter';
 import ForecastFetchHourly from '../components/ForecastFetchHourly';
 import ForecastFetchDaily from '../components/ForecastFetchDaily';
+import HourlyDailyButtons from '../components/HourlyDailyButtons';
 
 const HomePage = () => {
 	const [hourly, setHourly] = useState(true);
+	const { latitude, longitude } = useSelector((state) => state.coordinates);
 
 	if (hourly) {
 		return (
@@ -16,22 +19,7 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							<button
-								onClick={() => {
-									setHourly(true);
-								}}
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 my-1 w-32"
-							>
-								Hourly
-							</button>
-							<button
-								onClick={() => {
-									setHourly(false);
-								}}
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 my-1 w-32"
-							>
-								Daily
-							</button>
+							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
 							<ForecastFetchHourly />
 						</div>
 					</div>
@@ -39,6 +27,7 @@ const HomePage = () => {
 			</div>
 		);
 	}
+
 	if (!hourly) {
 		return (
 			<div className="bg-slate-500">
@@ -49,22 +38,7 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							<button
-								onClick={() => {
-									setHourly(true);
-								}}
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4"
-							>
-								Hourly
-							</button>
-							<button
-								onClick={() => {
-									setHourly(false);
-								}}
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4"
-							>
-								Daily
-							</button>
+							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
 							<ForecastFetchDaily />
 						</div>
 					</div>
