@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
-import { UseSelector, useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
 import { selectDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
 
 //imported functions
 import { formatTime, formatDate } from '../utilities/dateTimeFormat';
-
 import { urlSubstring } from '../utilities/urlSubString';
 
 const ForecastFetchDaily = () => {
