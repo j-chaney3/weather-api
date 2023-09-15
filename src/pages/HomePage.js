@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CoordinatesConverter from '../components/CoordinatesConverter';
-import ForecastFetchHourly from '../components/ForecastFetchHourly';
-import ForecastFetchDaily from '../components/ForecastFetchDaily';
+import DailyForecast from '../components/DailyForecast';
+import HourlyForecast from '../components/HourlyForecast';
 import HourlyDailyButtons from '../components/HourlyDailyButtons';
 
 const HomePage = () => {
@@ -20,7 +20,7 @@ const HomePage = () => {
 
 						<div className="bg-slate-300">
 							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
-							<ForecastFetchHourly />
+							<HourlyForecast />
 						</div>
 					</div>
 				</div>
@@ -39,7 +39,7 @@ const HomePage = () => {
 
 						<div className="bg-slate-300">
 							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
-							<ForecastFetchDaily />
+							<DailyForecast />
 						</div>
 					</div>
 				</div>
