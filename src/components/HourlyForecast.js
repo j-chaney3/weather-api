@@ -47,10 +47,10 @@ const HourlyForecast = () => {
 
 	return (
 		<div>
-			<h1 className="font-bold">Hourly Forecast</h1>
-			<h1>
+			<h1 className="font-bold">
 				{city}, {state}
 			</h1>
+			<h1 className="font-semibold">Hourly Forecast</h1>
 			<p>Latitude: {latitude}</p>
 			<p>Longitude: {longitude}</p>
 

@@ -45,10 +45,10 @@ const DailyForecast = () => {
 
 	return (
 		<div>
-			<h1 className="font-bold">Daily Forecast</h1>
-			<h1>
+			<h1 className="font-bold">
 				{city}, {state}
 			</h1>
+			<h1 className="font-semibold">Daily Forecast</h1>
 			<p>Latitude: {latitude}</p>
 			<p className="mb-3">Longitude: {longitude}</p>
 			<div className="grid grid-cols-1 gap-3">
@@ -67,6 +67,7 @@ const DailyForecast = () => {
 									<h3 className="text-center text-xl text-gray-900 font-medium leading-8">
 										{period.name}, {period.temperature}°F
 									</h3>
+									<h2 className="font-semibold">{formatDate(period.startTime)}</h2>
 									<div className="text-center text-gray-black text-xs font-semibold">
 										<p>
 											Precipitation:{' '}
@@ -78,15 +79,17 @@ const DailyForecast = () => {
 										<p>Humidity: {period.relativeHumidity.value}%</p>
 									</div>
 									<div className="text-center text-black-400 text-sm font-semibold justify-items-center m-2">
-										<p className="text-md">
-											{' '}
-											<span className="font-bold">Forecast:</span> {period.shortForecast}.
-										</p>
-										<p className="justify-items-center">{period.detailedForecast}</p>
+										<div className="flex items-center">
+											<p className="text-md text-left">
+												{' '}
+												<span className="font-bold">Forecast:</span> {period.shortForecast}.{' '}
+												{period.detailedForecast}
+											</p>
+											<p className="justify-items-center"></p>
+										</div>
 									</div>
 
 									<div className="text-center text-gray-400 text-xs font-semibold my-3 mx-auto relative">
-										<p className="font-bold text-sm">{formatDate(period.startTime)}</p>
 										<p>
 											{formatTime(period.startTime)} - {formatTime(period.endTime)}
 										</p>
