@@ -1,17 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const API_KEY = process.env.REACT_APP_GMAP_API;
+//const API_KEY = process.env.REACT_APP_GMAP_API;
 
 export const fetchCoordinates = createAsyncThunk('coordinates/fetchCoordinates', async (zipcode) => {
 	try {
 		const response = await fetch(
-			`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${API_KEY}`
+			//`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${API_KEY}`
+			`http://localhost:3000/geocode/:${zipcode}`
 		);
 		if (!response.ok) {
 			throw new Error('Unable to fetch Latitude/Longitude');
 		}
 		const data = await response.json();
-		return data.results[0].geometry.location;
+		//return data.results[0].geometry.location;
+		return data;
 	} catch (error) {
 		throw error;
 	}
