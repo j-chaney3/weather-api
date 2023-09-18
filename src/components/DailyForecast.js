@@ -53,9 +53,9 @@ const DailyForecast = () => {
 			<p className="mb-3">Longitude: {longitude}</p>
 			<div className="grid grid-cols-1 gap-3">
 				{daily.map((period, index) => (
-					<div key={index} className="flex items-center">
+					<div key={index} className="flex items-center justify-center">
 						<div className="container mx-auto px-10 mb-5">
-							<div className="bg-white rounded-lg shadow-md p-6 h-auto w-full flex flex-col justify-between">
+							<div className="bg-white rounded-lg shadow-md p-6 h-auto w-full flex flex-col items-center justify-center ">
 								<div className="photo-wrapper p-2 w-a mx-auto relative mt-10 mb-3">
 									<img
 										className="w-225 h-225 rounded-full mx-auto"
@@ -78,7 +78,7 @@ const DailyForecast = () => {
 										</p>
 										<p>Humidity: {period.relativeHumidity.value}%</p>
 									</div>
-									<div className="text-center text-black-400 text-sm font-semibold justify-items-center m-2">
+									<div className="relative text-center text-black-400 text-sm font-semibold justify-items-center m-2">
 										<div className="flex items-center">
 											<p className="text-md text-left">
 												{' '}
