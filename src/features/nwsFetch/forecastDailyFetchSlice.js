@@ -27,6 +27,7 @@ const initialState = {
 	updated: '',
 	periods: [],
 	errMsg: '',
+	err: false,
 };
 
 export const forecastDailySlice = createSlice({
@@ -36,15 +37,18 @@ export const forecastDailySlice = createSlice({
 	extraReducers: {
 		[fetchForecastDaily.pending]: (state) => {
 			state.loading = true;
+			state.err = false;
 		},
 		[fetchForecastDaily.fulfilled]: (state, action) => {
 			state.isLoading = false;
+			state.err = false;
 			state.errMsg = '';
 			state.updated = action.payload.updated;
 			state.periods = action.payload.periods;
 		},
 		[fetchForecastDaily.rejected]: (state, action) => {
 			state.isLoading = false;
+			state.err = true;
 			state.errMsg = action.err ? action.error.errMsg : 'Fetch failed';
 		},
 	},

@@ -27,6 +27,7 @@ const initialState = {
 	updated: '',
 	periods: [],
 	errMsg: '',
+	err: false,
 	temps: [],
 };
 
@@ -47,6 +48,7 @@ export const forecastHourlySlice = createSlice({
 		},
 		[fetchForecastHourly.rejected]: (state, action) => {
 			state.isLoading = false;
+			state.err = true;
 			state.errMsg = action.err ? action.error.message : 'Fetch Failed';
 		},
 	},
