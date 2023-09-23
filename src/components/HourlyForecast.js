@@ -10,16 +10,16 @@ import { urlSubstring } from '../utilities/urlSubString';
 
 const HourlyForecast = () => {
 	const dispatch = useDispatch();
-	const { latitude, longitude, errMsg } = useSelector((state) => state.coordinates);
+	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 
 	useEffect(() => {
-		if (latitude && longitude) {
+		if (latitude && longitude && !err) {
 			const cString = latitude.toFixed(4) + ',' + longitude.toFixed(4);
 			console.log('Truncated:' + cString);
 			dispatch(fetchNWSPoints(cString));
 		}
-	}, [dispatch, latitude, longitude]);
+	}, [dispatch, latitude, longitude, err, zipcode]);
 
 	useEffect(() => {
 		if (gridX && gridY && gridId) {
@@ -33,10 +33,14 @@ const HourlyForecast = () => {
 	const tempArray = useSelector(selectTemps);
 	const { low, high } = lowHigh(tempArray);
 
-	if (!latitude && !longitude) {
+	if (!latitude && !longitude && !err) {
 		return <div>Please enter your zipcode to see the current forecast.</div>;
-	} else if (errMsg) {
-		return <div>Error fetching forecast: {errMsg}</div>;
+	} else if (err) {
+		return (
+			<div>
+				Error fetching forecast: <p className="text-red-600 inline-block font-bold">{errMsg}! </p>
+			</div>
+		);
 	} else if (isLoading) {
 		return (
 			<div>
