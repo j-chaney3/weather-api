@@ -10,8 +10,8 @@ import { urlSubstring } from '../utilities/urlSubString';
 
 const HourlyForecast = () => {
 	const dispatch = useDispatch();
-	const { latitude, longitude } = useSelector((state) => state.coordinates);
-	const { city, state, gridX, gridY, gridId, isLoading, errMsg } = useSelector((state) => state.NWSPoints);
+	const { latitude, longitude, errMsg } = useSelector((state) => state.coordinates);
+	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 
 	useEffect(() => {
 		if (latitude && longitude) {

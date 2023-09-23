@@ -10,8 +10,8 @@ import { urlSubstring } from '../utilities/urlSubString';
 
 const DailyForecast = () => {
 	const dispatch = useDispatch();
-	const { latitude, longitude } = useSelector((state) => state.coordinates);
-	const { city, state, gridX, gridY, gridId, isLoading, errMsg } = useSelector((state) => state.NWSPoints);
+	const { latitude, longitude, errMsg } = useSelector((state) => state.coordinates);
+	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -45,12 +45,16 @@ const DailyForecast = () => {
 
 	return (
 		<div>
-			<h1 className="font-bold">
-				{city}, {state}
-			</h1>
-			<h1 className="font-semibold">Daily Forecast</h1>
-			<p>Latitude: {latitude}</p>
-			<p className="mb-3">Longitude: {longitude}</p>
+			<div>
+				<h1 className="font-bold">
+					{city}, {state}
+				</h1>
+				<h1 className="font-semibold">Daily Forecast</h1>
+				<p>Latitude: {latitude}</p>
+				<p className="mb-3">Longitude: {longitude}</p>
+				{console.log('invalid zip?', errMsg)}
+			</div>
+			{/* cards */}
 			<div className="grid grid-cols-1 gap-3">
 				{daily.map((period, index) => (
 					<div key={index} className="flex items-center justify-center">
