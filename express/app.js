@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 const cors = require('cors');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(helmet());
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const port = 3000;
