@@ -37,7 +37,7 @@ export const coordinatesSlice = createSlice({
 		},
 		[fetchCoordinates.rejected]: (state, action) => {
 			state.isLoading = false;
-			state.errMsg = action.error ? action.error.message : 'Fetch failed';
+			state.errMsg = action.payload?.status === 400 ? 'Invalid Zipcode' : 'Invalid Zipcode';
 		},
 	},
 });
