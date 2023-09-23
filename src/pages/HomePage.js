@@ -7,7 +7,7 @@ import HourlyDailyButtons from '../components/HourlyDailyButtons';
 
 const HomePage = () => {
 	const [hourly, setHourly] = useState(true);
-	const { latitude, longitude } = useSelector((state) => state.coordinates);
+	const { latitude, longitude, err } = useSelector((state) => state.coordinates);
 
 	if (hourly) {
 		return (
@@ -19,7 +19,9 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
+							{latitude && longitude && !err && (
+								<HourlyDailyButtons hourly={hourly} setHourly={setHourly} />
+							)}
 							<HourlyForecast />
 						</div>
 					</div>
@@ -38,7 +40,9 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							{latitude && longitude && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
+							{latitude && longitude && !err && (
+								<HourlyDailyButtons hourly={hourly} setHourly={setHourly} />
+							)}
 							<DailyForecast />
 						</div>
 					</div>
