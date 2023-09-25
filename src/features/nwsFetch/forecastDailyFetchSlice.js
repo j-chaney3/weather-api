@@ -14,7 +14,7 @@ export const fetchForecastDaily = createAsyncThunk(`forecastDaily/fetchForecastD
 		if (!response.ok) {
 			throw new Error(`Network response not okay`);
 		}
-		console.log(url);
+
 		const data = await response.json();
 		return data.properties;
 	} catch (error) {
