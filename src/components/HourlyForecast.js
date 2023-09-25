@@ -22,12 +22,12 @@ const HourlyForecast = () => {
 	}, [dispatch, latitude, longitude, err, zipcode]);
 
 	useEffect(() => {
-		if (gridX && gridY && gridId) {
+		if (gridX && gridY && gridId && city) {
 			const url = `https://api.weather.gov/gridpoints/${gridId}/${gridX},${gridY}/forecast/hourly`;
-			console.log('Fetching hourly forecast with URL:', url);
+			console.log(`Fetching hourly forecast for ${city} with URL: ${url}`);
 			dispatch(fetchForecastHourly(url));
 		}
-	}, [dispatch, gridX, gridY, gridId]);
+	}, [dispatch, gridX, gridY, gridId, city]);
 
 	const hourly = useSelector(select24hours);
 	const tempArray = useSelector(selectTemps);

@@ -22,12 +22,12 @@ const DailyForecast = () => {
 	}, [dispatch, latitude, longitude, errMsg]);
 
 	useEffect(() => {
-		if (gridX && gridY && gridId) {
+		if (gridX && gridY && gridId && city) {
 			const url = `https://api.weather.gov/gridpoints/${gridId}/${gridX},${gridY}/forecast/`;
-			console.log('Fetching daily forecast with URL:', url);
+			console.log(`Fetching daily forecast for ${city} with URL: ${url}`);
 			dispatch(fetchForecastDaily(url));
 		}
-	}, [dispatch, gridX, gridY, gridId]);
+	}, [dispatch, gridX, gridY, gridId, city]);
 
 	const daily = useSelector(selectDaily);
 
