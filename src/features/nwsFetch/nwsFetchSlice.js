@@ -17,6 +17,7 @@ export const fetchNWSPoints = createAsyncThunk('NWSPoints/fetchNWSPoints', async
 		}
 
 		const data = await response.json();
+
 		return data.properties;
 	} catch (error) {
 		throw error;
