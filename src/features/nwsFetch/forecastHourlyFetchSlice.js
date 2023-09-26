@@ -3,22 +3,36 @@ import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 const email = process.env.REACT_APP_DEV_EMAIL;
 
 export const fetchForecastHourly = createAsyncThunk('forecastHourly/fetchForecastHourly', async (url) => {
-	try {
-		const userAgent = `NWS Portfolio Project, ${email}`;
-		const headers = new Headers();
+	const maxTries = 3;
+	let tries = 0;
+	const retryDelay = 3000;
 
-		headers.append('User-Agent', userAgent);
-		const response = await fetch(`${url}`, {
-			headers: headers,
-		});
+	while (tries < maxTries) {
+		try {
+			const userAgent = `NWS Portfolio Project, ${email}`;
+			const headers = new Headers();
 
-		if (!response.ok) {
-			throw new Error('Network Response not okay');
+			headers.append('User-Agent', userAgent);
+			const response = await fetch(`${url}`, {
+				headers: headers,
+			});
+
+			if (!response.ok) {
+				if (response.status === 500) {
+					tries += 1;
+					if (tries < maxTries) {
+						await new Promise((resolve) => setTimeout(resolve, retryDelay));
+					}
+					continue;
+				} else {
+					throw new Error(`Network Response not okay, retrying in ${retryDelay / 1000} seconds...`);
+				}
+			}
+			const data = await response.json();
+			return data.properties;
+		} catch (error) {
+			throw error;
 		}
-		const data = await response.json();
-		return data.properties;
-	} catch (error) {
-		throw error;
 	}
 });
 
