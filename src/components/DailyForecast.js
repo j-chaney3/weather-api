@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
 import { selectDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
-import { setNavCoordinatesAsync } from '../features/coordinates/navCoordinatesSlice';
 
 //imported functions
 import { formatTime, formatDate } from '../utilities/dateTimeFormat';
@@ -14,15 +13,6 @@ const DailyForecast = () => {
 	const { latitude, longitude, errMsg, err } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
-
-	useEffect(() => {
-		dispatch(setNavCoordinatesAsync());
-		if (navLat && navLng) {
-			console.log(`navLat: ${navLat} navLng: ${navLng}`);
-			const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
-			dispatch(fetchNWSPoints(shortString));
-		}
-	}, [dispatch, navLat, navLng]);
 
 	useEffect(() => {
 		if (latitude && longitude) {

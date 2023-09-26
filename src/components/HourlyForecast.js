@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastHourly, select24hours, selectTemps } from '../features/nwsFetch/forecastHourlyFetchSlice';
-import { setNavCoordinatesAsync } from '../features/coordinates/navCoordinatesSlice';
 
 //imported functions
 import { lowHigh } from '../utilities/lowHigh';
@@ -14,15 +13,6 @@ const HourlyForecast = () => {
 	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
-
-	useEffect(() => {
-		dispatch(setNavCoordinatesAsync());
-		if (navLat && navLng) {
-			console.log(`navLat: ${navLat} navLng: ${navLng}`);
-			const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
-			dispatch(fetchNWSPoints(shortString));
-		}
-	}, [dispatch, navLat, navLng]);
 
 	useEffect(() => {
 		if (latitude && longitude && !err) {
