@@ -1,17 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCoordinates } from '../features/coordinates/coordinatesSlice';
+import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 
 const CoordinatesConverter = () => {
 	const dispatch = useDispatch();
-	//const { latitude, longitude } = useSelector((state) => state.coordinates);
-
 	const [zipcode, setZipcode] = useState('');
 	const [isValidZipcode, setIsValidZipcode] = useState(false);
 
+	useEffect(() => {
+		const getGeolocation = () => {
+			return new Promise((resolve, reject) => {
+				if ('geolocation' in navigator) {
+					navigator.geolocation.getCurrentPosition(
+						(position) => {
+							const navLat = position.coords.latitude;
+							const navLng = position.coords.longitude;
+							const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
+							resolve(shortString);
+						},
+						(error) => {
+							reject(error);
+						}
+					);
+				} else {
+					reject(new Error('Geolocation is not available in this browser.'));
+				}
+			});
+		};
+
+		getGeolocation()
+			.then((shortString) => {
+				dispatch(fetchNWSPoints(shortString));
+			})
+			.catch((error) => {
+				console.error('Error getting geolocation:', error);
+			});
+		// eslint-disable-next-line
+	}, []);
+
 	const handleConvertClick = async () => {
 		try {
-			dispatch(fetchCoordinates(zipcode)); // Dispatch the fetchCoordinates action
+			dispatch(fetchCoordinates(zipcode));
 		} catch (error) {
 			console.error('Error fetching coordinates:', error);
 		}
