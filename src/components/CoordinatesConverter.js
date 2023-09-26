@@ -21,7 +21,8 @@ const CoordinatesConverter = () => {
 						},
 						(error) => {
 							reject(error);
-						}
+						},
+						{ timeout: 10000 }
 					);
 				} else {
 					reject(new Error('Geolocation is not available in this browser.'));
@@ -36,6 +37,7 @@ const CoordinatesConverter = () => {
 			.catch((error) => {
 				console.error('Error getting geolocation:', error);
 			});
+
 		// eslint-disable-next-line
 	}, []);
 
