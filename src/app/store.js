@@ -4,6 +4,7 @@ import { coordinatesReducer } from '../features/coordinates/coordinatesSlice';
 import { NWSReducer } from '../features/nwsFetch/nwsFetchSlice';
 import { forecastHourlyReducer } from '../features/nwsFetch/forecastHourlyFetchSlice';
 import { forecastDailyReducer } from '../features/nwsFetch/forecastDailyFetchSlice';
+import { navCoordinatesReducer } from '../features/coordinates/navCoordinatesSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -11,5 +12,6 @@ export const store = configureStore({
 		NWSPoints: NWSReducer,
 		forecastHourly: forecastHourlyReducer,
 		forecastDaily: forecastDailyReducer,
+		navCoordinates: navCoordinatesReducer,
 	},
 });
