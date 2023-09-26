@@ -1,5 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export const setNavCoordinatesAsync = () => (dispatch) => {
+	navigator.geolocation.getCurrentPosition(function (position) {
+		const getNavLat = position.coords.latitude;
+		const getNavLng = position.coords.longitude;
+
+		// Dispatch the action to update the Redux store
+		dispatch(setNavCoordinates({ navLat: getNavLat, navLng: getNavLng }));
+	});
+};
 // Define your initial state
 const initialState = {
 	navLat: null,
@@ -24,12 +33,3 @@ export const { setNavCoordinates } = navCoordinatesSlice.actions;
 export const navCoordinatesReducer = navCoordinatesSlice.reducer;
 
 // Use this action to set navLat and navLng in the Redux store
-export const setNavCoordinatesAsync = () => (dispatch) => {
-	navigator.geolocation.getCurrentPosition(function (position) {
-		const getNavLat = position.coords.latitude;
-		const getNavLng = position.coords.longitude;
-
-		// Dispatch the action to update the Redux store
-		dispatch(setNavCoordinates({ navLat: getNavLat, navLng: getNavLng }));
-	});
-};
