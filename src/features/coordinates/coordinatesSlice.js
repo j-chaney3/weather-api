@@ -2,7 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchCoordinates = createAsyncThunk('coordinates/fetchCoordinates', async (zipcode) => {
 	try {
-		const response = await fetch(`http://localhost:3000/geocode/:${zipcode}`);
+		const response = await fetch(
+			`https://us-central1-nucampfunctions-392201.cloudfunctions.net/first-function/geocode/:${zipcode}`
+		);
+
 		if (!response.ok) {
 			throw new Error('Invalid Zipcode');
 		}
