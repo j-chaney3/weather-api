@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@google-cloud/functions-framework": "^3.3.0",
 		"@headlessui/react": "^1.7.16",
 		"@heroicons/react": "^2.0.18",
 		"@reduxjs/toolkit": "^1.9.5",
@@ -12,6 +13,7 @@
 		"dotenv": "^16.3.1",
 		"helmet": "^7.0.0",
 		"react": "^18.2.0",
+		"react-device-detect": "^2.2.3",
 		"react-dom": "^18.2.0",
 		"react-geocode": "^0.2.3",
 		"react-redux": "^8.1.2",
