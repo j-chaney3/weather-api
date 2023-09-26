@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
 import { selectDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
+import { isFirefox } from 'react-device-detect';
 
 //imported functions
 import { formatTime, formatDate } from '../utilities/dateTimeFormat';
@@ -33,7 +34,13 @@ const DailyForecast = () => {
 	const daily = useSelector(selectDaily);
 
 	if (!navLat && !navLng && !latitude && !longitude && !err) {
-		return <div>Please enter your zipcode to see the current forecast.</div>;
+		if (!isFirefox) {
+			return <div>Please enter your zipcode to see the current forecast.</div>;
+		} else {
+			return (
+				<div>Browser Location data not currently working with firefox, please manually enter your zipcode.</div>
+			);
+		}
 	} else if (err) {
 		return (
 			<div>

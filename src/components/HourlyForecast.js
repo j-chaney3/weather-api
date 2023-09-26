@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastHourly, select24hours, selectTemps } from '../features/nwsFetch/forecastHourlyFetchSlice';
+import { isFirefox } from 'react-device-detect';
 
 //imported functions
 import { lowHigh } from '../utilities/lowHigh';
@@ -35,7 +36,13 @@ const HourlyForecast = () => {
 	const { low, high } = lowHigh(tempArray);
 
 	if (!navLat && !navLng && !latitude && !longitude && !err) {
-		return <div>Please enter your zipcode to see the current forecast.</div>;
+		if (!isFirefox) {
+			return <div>Please enter your zipcode to see the current forecast.</div>;
+		} else {
+			return (
+				<div>Browser Location data not currently working with firefox, please manually enter your zipcode.</div>
+			);
+		}
 	} else if (err) {
 		return (
 			<div>
