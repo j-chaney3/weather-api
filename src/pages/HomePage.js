@@ -1,13 +1,20 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CoordinatesConverter from '../components/CoordinatesConverter';
 import DailyForecast from '../components/DailyForecast';
 import HourlyForecast from '../components/HourlyForecast';
 import HourlyDailyButtons from '../components/HourlyDailyButtons';
+import { setNavCoordinatesAsync } from '../features/coordinates/navCoordinatesSlice';
 
 const HomePage = () => {
+	const dispatch = useDispatch();
 	const [hourly, setHourly] = useState(true);
-	const { latitude, longitude, err } = useSelector((state) => state.coordinates);
+	const { err } = useSelector((state) => state.coordinates);
+	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
+
+	useEffect(() => {
+		dispatch(setNavCoordinatesAsync());
+	}, [dispatch, navLat, navLng]);
 
 	if (hourly) {
 		return (
@@ -19,9 +26,7 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							{latitude && longitude && !err && (
-								<HourlyDailyButtons hourly={hourly} setHourly={setHourly} />
-							)}
+							{!err && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
 							<HourlyForecast />
 						</div>
 					</div>
@@ -40,9 +45,7 @@ const HomePage = () => {
 						</div>
 
 						<div className="bg-slate-300">
-							{latitude && longitude && !err && (
-								<HourlyDailyButtons hourly={hourly} setHourly={setHourly} />
-							)}
+							{!err && <HourlyDailyButtons hourly={hourly} setHourly={setHourly} />}
 							<DailyForecast />
 						</div>
 					</div>
