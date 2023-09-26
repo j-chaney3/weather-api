@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
 import { selectDaily } from '../features/nwsFetch/forecastDailyFetchSlice';
+import { setNavCoordinatesAsync } from '../features/coordinates/navCoordinatesSlice';
 
 //imported functions
 import { formatTime, formatDate } from '../utilities/dateTimeFormat';
@@ -12,6 +13,16 @@ const DailyForecast = () => {
 	const dispatch = useDispatch();
 	const { latitude, longitude, errMsg, err } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
+	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
+
+	useEffect(() => {
+		dispatch(setNavCoordinatesAsync());
+		if (navLat && navLng) {
+			console.log(`navLat: ${navLat} navLng: ${navLng}`);
+			const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
+			dispatch(fetchNWSPoints(shortString));
+		}
+	}, [dispatch, navLat, navLng]);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -31,7 +42,7 @@ const DailyForecast = () => {
 
 	const daily = useSelector(selectDaily);
 
-	if (!latitude && !longitude && !err) {
+	if (!navLat && !navLng && !latitude && !longitude && !err) {
 		return <div>Please enter your zipcode to see the current forecast.</div>;
 	} else if (err) {
 		return (
@@ -53,8 +64,8 @@ const DailyForecast = () => {
 						{city}, {state}
 					</h1>
 					<h1 className="font-semibold">Daily Forecast</h1>
-					<p>Latitude: {latitude}</p>
-					<p className="mb-3">Longitude: {longitude}</p>
+					<p>Latitude: {latitude || navLat || 'N/A'}</p>
+					<p className="mb-3">Longitude: {longitude || navLng || 'N/A'}</p>
 				</div>
 				{/* cards */}
 				<div className="grid grid-cols-1 gap-3">
