@@ -7,6 +7,7 @@ const CoordinatesConverter = () => {
 	const dispatch = useDispatch();
 	const [zipcode, setZipcode] = useState('');
 	const [isValidZipcode, setIsValidZipcode] = useState(false);
+	//const [browswer, setBrowser] = useState('');
 
 	useEffect(() => {
 		const getGeolocation = () => {
@@ -17,12 +18,17 @@ const CoordinatesConverter = () => {
 							const navLat = position.coords.latitude;
 							const navLng = position.coords.longitude;
 							const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
+							console.log('truncated coordinates: ', shortString);
 							resolve(shortString);
 						},
 						(error) => {
 							reject(error);
 						},
-						{ timeout: 10000 }
+						{
+							once: true,
+							timeout: 3000,
+							maximumAge: 60000,
+						}
 					);
 				} else {
 					reject(new Error('Geolocation is not available in this browser.'));
