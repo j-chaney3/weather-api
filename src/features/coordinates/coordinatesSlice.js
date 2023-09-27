@@ -29,7 +29,12 @@ const initialState = {
 export const coordinatesSlice = createSlice({
 	name: 'coordinates',
 	initialState,
-	reducers: {},
+	reducers: {
+		updateGeolocationCoordinates: (state, action) => {
+			state.latitude = action.payload.latitude;
+			state.longitude = action.payload.longitude;
+		},
+	},
 	extraReducers: {
 		[fetchCoordinates.pending]: (state) => {
 			state.err = false;
@@ -51,5 +56,5 @@ export const coordinatesSlice = createSlice({
 	},
 });
 
-export const { setCoordinates } = coordinatesSlice.actions;
+export const { setCoordinates, updateGeolocationCoordinates } = coordinatesSlice.actions;
 export const coordinatesReducer = coordinatesSlice.reducer;
