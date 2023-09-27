@@ -37,7 +37,9 @@ const DailyForecast = () => {
 			return <div>Please enter your zipcode to see the current forecast.</div>;
 		} else {
 			return (
-				<div>Browser Location data not currently working with firefox, please manually enter your zipcode.</div>
+				<div>
+					Browser Location data not currently available. Please enter your zipcode to see current forecast.
+				</div>
 			);
 		}
 	} else if (err) {
