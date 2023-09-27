@@ -13,15 +13,14 @@ const HourlyForecast = () => {
 	const dispatch = useDispatch();
 	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
-	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
 
 	useEffect(() => {
-		if (latitude && longitude && !err) {
+		if (latitude && longitude) {
 			const cString = latitude.toFixed(4) + ',' + longitude.toFixed(4);
 			console.log('Truncated:' + cString);
 			dispatch(fetchNWSPoints(cString));
 		}
-	}, [dispatch, latitude, longitude, err, zipcode]);
+	}, [dispatch, latitude, longitude]);
 
 	useEffect(() => {
 		if (gridX && gridY && gridId && city) {
@@ -35,7 +34,7 @@ const HourlyForecast = () => {
 	const tempArray = useSelector(selectTemps);
 	const { low, high } = lowHigh(tempArray);
 
-	if (!navLat && !navLng && !latitude && !longitude && !err) {
+	if (!latitude && !longitude && !err) {
 		if (!isFirefox) {
 			return <div>Please enter your zipcode to see the current forecast.</div>;
 		} else {
@@ -60,11 +59,11 @@ const HourlyForecast = () => {
 	return (
 		<div>
 			<h1 className="font-bold">
-				{city}, {state}
+				{city}, {state} - {zipcode}
 			</h1>
 			<h1 className="font-semibold">Hourly Forecast</h1>
-			<p>Latitude: {latitude || navLat || 'N/A'}</p>
-			<p>Longitude: {longitude || navLng || 'N/A'}</p>
+			<p>Latitude: {latitude || 'N/A'}</p>
+			<p>Longitude: {longitude || 'N/A'}</p>
 
 			<div className="m-3">
 				Today's Temperatures - Low: {low} °F / High: {high} °F

@@ -11,17 +11,16 @@ import { urlSubstring } from '../utilities/urlSubString';
 
 const DailyForecast = () => {
 	const dispatch = useDispatch();
-	const { latitude, longitude, errMsg, err } = useSelector((state) => state.coordinates);
+	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
-	const { navLat, navLng } = useSelector((state) => state.navCoordinates);
 
 	useEffect(() => {
 		if (latitude && longitude) {
 			const cString = latitude.toFixed(4) + ',' + longitude.toFixed(4);
-			console.log('Truncated coordinates:' + cString);
+			console.log('Truncated zipcode coordinates:' + cString);
 			dispatch(fetchNWSPoints(cString));
 		}
-	}, [dispatch, latitude, longitude, errMsg]);
+	}, [dispatch, latitude, longitude]);
 
 	useEffect(() => {
 		if (gridX && gridY && gridId && city) {
@@ -33,7 +32,7 @@ const DailyForecast = () => {
 
 	const daily = useSelector(selectDaily);
 
-	if (!navLat && !navLng && !latitude && !longitude && !err) {
+	if (!latitude && !longitude && !err) {
 		if (!isFirefox) {
 			return <div>Please enter your zipcode to see the current forecast.</div>;
 		} else {
@@ -58,11 +57,11 @@ const DailyForecast = () => {
 			<div>
 				<div>
 					<h1 className="font-bold">
-						{city}, {state}
+						{city}, {state} - {zipcode}
 					</h1>
 					<h1 className="font-semibold">Daily Forecast</h1>
-					<p>Latitude: {latitude || navLat || 'N/A'}</p>
-					<p className="mb-3">Longitude: {longitude || navLng || 'N/A'}</p>
+					<p>Latitude: {latitude || 'N/A'}</p>
+					<p className="mb-3">Longitude: {longitude || 'N/A'}</p>
 				</div>
 				{/* cards */}
 				<div className="grid grid-cols-1 gap-3">
