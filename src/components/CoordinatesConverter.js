@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCoordinates } from '../features/coordinates/coordinatesSlice';
+import { updateGeolocationCoordinates } from '../features/coordinates/coordinatesSlice';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 
 const CoordinatesConverter = () => {
 	const dispatch = useDispatch();
 	const [zipcode, setZipcode] = useState('');
 	const [isValidZipcode, setIsValidZipcode] = useState(false);
-	//const [browswer, setBrowser] = useState('');
 
 	useEffect(() => {
 		const getGeolocation = () => {
@@ -17,16 +17,19 @@ const CoordinatesConverter = () => {
 						(position) => {
 							const navLat = position.coords.latitude;
 							const navLng = position.coords.longitude;
-							const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
-							console.log('truncated coordinates: ', shortString);
-							resolve(shortString);
+							console.log('Received navigator coordinates: ', navLat, navLng);
+
+							// Dispatch the new action to update coordinates from geolocation
+							dispatch(updateGeolocationCoordinates({ latitude: navLat, longitude: navLng }));
+
+							resolve();
 						},
 						(error) => {
 							reject(error);
 						},
 						{
 							once: true,
-							timeout: 3000,
+							timeout: 10000,
 							maximumAge: 60000,
 						}
 					);
@@ -38,14 +41,15 @@ const CoordinatesConverter = () => {
 
 		getGeolocation()
 			.then((shortString) => {
+				console.log(`dispatched fetchNWS(${shortString})`);
 				dispatch(fetchNWSPoints(shortString));
 			})
 			.catch((error) => {
 				console.error('Error getting geolocation:', error);
 			});
 
-		// eslint-disable-next-line
-	}, []);
+		//eslint - disable - next - line;
+	}, [dispatch]);
 
 	const handleConvertClick = async () => {
 		try {
