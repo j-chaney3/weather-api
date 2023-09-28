@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
-//import { Routes, Route } from 'react-router-dom';
-
-//pages
 import HomePage from './pages/HomePage';
+import SiteFooter from './components/pageComponents/Footer';
+import SiteHeader from './components/pageComponents/Header';
 
 function App() {
 	return (
 		<div className="App">
+			<SiteHeader />
 			<HomePage />
+			<SiteFooter />
 		</div>
 	);
 }
