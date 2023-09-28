@@ -13,6 +13,7 @@ const DailyForecast = () => {
 	const dispatch = useDispatch();
 	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
+	const { updated } = useSelector((state) => state.forecastDaily);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -61,7 +62,9 @@ const DailyForecast = () => {
 					<h1 className="font-bold">
 						{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
 					</h1>
-					<h1 className="font-semibold">Daily Forecast</h1>
+					<h2 className="font-semibold">
+						Updated at: {formatDate(updated)}, {formatTime(updated)}
+					</h2>
 					<p>Latitude: {latitude || 'N/A'}</p>
 					<p className="mb-3">Longitude: {longitude || 'N/A'}</p>
 				</div>
@@ -80,9 +83,9 @@ const DailyForecast = () => {
 									</div>
 									<div className="p-2">
 										<h3 className="text-center text-xl text-gray-900 font-medium leading-8">
-											{period.name}, {period.temperature}°F
+											{period.name}, {formatDate(period.startTime)}
 										</h3>
-										<h2 className="font-semibold">{formatDate(period.startTime)}</h2>
+										<h2 className="font-semibold">{period.temperature}°F</h2>
 										<div className="text-center text-gray-black text-xs font-semibold">
 											<p>
 												Precipitation:{' '}

@@ -6,13 +6,14 @@ import { isFirefox } from 'react-device-detect';
 
 //imported functions
 import { lowHigh } from '../utilities/lowHigh';
-import { formatTime } from '../utilities/dateTimeFormat';
+import { formatDate, formatTime } from '../utilities/dateTimeFormat';
 import { urlSubstring } from '../utilities/urlSubString';
 
 const HourlyForecast = () => {
 	const dispatch = useDispatch();
 	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
+	const { updated } = useSelector((state) => state.forecastHourly);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -63,11 +64,13 @@ const HourlyForecast = () => {
 			<h1 className="font-bold">
 				{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
 			</h1>
-			<h1 className="font-semibold">Hourly Forecast</h1>
+			<h2 className="font-semibold">
+				Updated at: {formatDate(updated)}, {formatTime(updated)}
+			</h2>
 			<p>Latitude: {latitude || 'N/A'}</p>
 			<p>Longitude: {longitude || 'N/A'}</p>
 
-			<div className="m-3">
+			<div className="m-3 text-sm">
 				Today's Temperatures - Low: {low} °F / High: {high} °F
 			</div>
 			<div className="grid grid-cols-1 gap-3">
