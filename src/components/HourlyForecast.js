@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastHourly, select24hours, selectTemps } from '../features/nwsFetch/forecastHourlyFetchSlice';
@@ -14,6 +14,7 @@ const HourlyForecast = () => {
 	const { latitude, longitude, errMsg, err, zipcode } = useSelector((state) => state.coordinates);
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 	const { updated } = useSelector((state) => state.forecastHourly);
+	const [isLoadingForecast, setLoadingForecast] = useState(true);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -27,7 +28,14 @@ const HourlyForecast = () => {
 		if (gridX && gridY && gridId && city) {
 			const url = `https://api.weather.gov/gridpoints/${gridId}/${gridX},${gridY}/forecast/hourly`;
 			console.log(`Fetching hourly forecast for ${city} with URL: ${url}`);
-			dispatch(fetchForecastHourly(url));
+			dispatch(fetchForecastHourly(url))
+				.then(() => {
+					setLoadingForecast(false);
+					console.log('forecast hourly loaded.');
+				})
+				.catch((error) => {
+					console.error('Error fetching forecast:', error);
+				});
 		}
 	}, [dispatch, gridX, gridY, gridId, city]);
 
@@ -51,7 +59,7 @@ const HourlyForecast = () => {
 				Error fetching forecast: <p className="text-red-600 inline-block font-bold">{errMsg}! </p>
 			</div>
 		);
-	} else if (isLoading) {
+	} else if (isLoading || isLoadingForecast) {
 		return (
 			<div>
 				<h1>Loading....</h1>
