@@ -59,7 +59,7 @@ const DailyForecast = () => {
 			<div>
 				<div>
 					<h1 className="font-bold">
-						{city}, {state} - {zipcode}
+						{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
 					</h1>
 					<h1 className="font-semibold">Daily Forecast</h1>
 					<p>Latitude: {latitude || 'N/A'}</p>

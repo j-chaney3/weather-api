@@ -61,7 +61,7 @@ const HourlyForecast = () => {
 	return (
 		<div>
 			<h1 className="font-bold">
-				{city}, {state} - {zipcode}
+				{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
 			</h1>
 			<h1 className="font-semibold">Hourly Forecast</h1>
 			<p>Latitude: {latitude || 'N/A'}</p>
@@ -84,9 +84,9 @@ const HourlyForecast = () => {
 								</div>
 								<div className="p-2">
 									<h3 className="text-center text-xl text-gray-900 font-medium leading-8">
-										{period.temperature}°F
+										{formatTime(period.startTime)}
 									</h3>
-									<div className="text-center text-gray-black text-xs font-semibold">
+									<div className="text-center text-black text-xs font-semibold">
 										<p>Precipitation: {period.probabilityOfPrecipitation.value}%</p>
 									</div>
 									<div className="text-center text-black-400 text-xs font-semibold">
@@ -95,8 +95,8 @@ const HourlyForecast = () => {
 										</p>
 									</div>
 
-									<div className="text-center text-gray-400 text-xs font-semibold my-3 mx-auto relative">
-										<p>{formatTime(period.startTime)}</p>
+									<div className="text-center text-black text-s font-semibold my-3 mx-auto relative">
+										<p>{period.temperature}°F</p>
 									</div>
 								</div>
 							</div>
