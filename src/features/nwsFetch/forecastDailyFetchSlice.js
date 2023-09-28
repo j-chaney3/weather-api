@@ -9,7 +9,7 @@ export const fetchForecastDaily = createAsyncThunk(`forecastDaily/fetchForecastD
 
 	while (tries < maxTries) {
 		try {
-			const userAgent = `NWS Portfolio Project, ${email}`;
+			const userAgent = `https://nws-forecast-8af4a.web.app/, ${email}`;
 			const headers = new Headers();
 
 			headers.append('User-Agent', userAgent);
