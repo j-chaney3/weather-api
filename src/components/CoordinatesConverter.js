@@ -4,7 +4,7 @@ import { fetchCoordinates } from '../features/coordinates/coordinatesSlice';
 import { updateGeolocationCoordinates } from '../features/coordinates/coordinatesSlice';
 import { fetchNWSPoints } from '../features/nwsFetch/nwsFetchSlice';
 
-const CoordinatesConverter = () => {
+const CoordinatesConverter = ({ setHourly }) => {
 	const dispatch = useDispatch();
 	const [zipcode, setZipcode] = useState('');
 	const [isValidZipcode, setIsValidZipcode] = useState(false);
@@ -92,7 +92,10 @@ const CoordinatesConverter = () => {
 			<button
 				type="submit"
 				id="check"
-				onClick={handleConvertClick}
+				onClick={() => {
+					handleConvertClick();
+					setHourly(true);
+				}}
 				className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4 disabled:bg-red-200`}
 				disabled={!isValidZipcode}
 			>
