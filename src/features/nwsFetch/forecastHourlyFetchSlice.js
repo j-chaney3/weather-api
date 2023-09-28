@@ -5,7 +5,7 @@ const email = process.env.REACT_APP_DEV_EMAIL;
 export const fetchForecastHourly = createAsyncThunk('forecastHourly/fetchForecastHourly', async (url) => {
 	const maxTries = 3;
 	let tries = 0;
-	const retryDelay = 3000;
+	const retryDelay = 5000;
 
 	while (tries < maxTries) {
 		try {
