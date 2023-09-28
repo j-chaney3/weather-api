@@ -18,13 +18,14 @@ const CoordinatesConverter = () => {
 							const navLat = position.coords.latitude;
 							const navLng = position.coords.longitude;
 							console.log('Received navigator coordinates: ', navLat, navLng);
-
+							const shortString = navLat.toFixed(4) + ',' + navLng.toFixed(4);
 							// Dispatch the new action to update coordinates from geolocation
 							dispatch(updateGeolocationCoordinates({ latitude: navLat, longitude: navLng }));
 
-							resolve();
+							resolve(shortString);
 						},
 						(error) => {
+							// dispatch(updateGeolocationCoordinates({ latitude: null, longitude: null }));
 							reject(error);
 						},
 						{
