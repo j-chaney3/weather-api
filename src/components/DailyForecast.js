@@ -15,6 +15,7 @@ const DailyForecast = () => {
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 	const { updated } = useSelector((state) => state.forecastDaily);
 	const [isLoadingForecast, setLoadingForecast] = useState(true);
+	const [failedLoadingForecast, setFailedLoadingForecast] = useState(false);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -34,6 +35,7 @@ const DailyForecast = () => {
 					console.log('forecast daily loaded.');
 				})
 				.catch((error) => {
+					setFailedLoadingForecast(true);
 					console.error('Error fetching forecast:', error);
 				});
 		}
@@ -65,6 +67,12 @@ const DailyForecast = () => {
 					role="status"
 				/>
 				<p className="text-black text-s font-semibold">Loading...</p>
+			</div>
+		);
+	} else if (failedLoadingForecast) {
+		return (
+			<div>
+				<p>Currently unable to get forecast data, retry soon.</p>
 			</div>
 		);
 	} else {

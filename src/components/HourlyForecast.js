@@ -15,6 +15,7 @@ const HourlyForecast = () => {
 	const { city, state, gridX, gridY, gridId, isLoading } = useSelector((state) => state.NWSPoints);
 	const { updated } = useSelector((state) => state.forecastHourly);
 	const [isLoadingForecast, setLoadingForecast] = useState(true);
+	const [failedLoadingForecast, setFailedLoadingForecast] = useState(false);
 
 	useEffect(() => {
 		if (latitude && longitude) {
@@ -34,6 +35,7 @@ const HourlyForecast = () => {
 					console.log('forecast hourly loaded.');
 				})
 				.catch((error) => {
+					setFailedLoadingForecast(true);
 					console.error('Error fetching forecast:', error);
 				});
 		}
@@ -66,7 +68,13 @@ const HourlyForecast = () => {
 					className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
 					role="status"
 				/>
-				<p className="text-blue-500 text-s font-semibold">Loading...</p>
+				<p className="text-black text-s font-semibold">Loading...</p>
+			</div>
+		);
+	} else if (failedLoadingForecast) {
+		return (
+			<div>
+				<p>Currently unable to get forecast data, retry soon.</p>
 			</div>
 		);
 	}
