@@ -72,37 +72,35 @@ const CoordinatesConverter = ({ setHourly }) => {
 
 	return (
 		<div>
-			<form>
-				<input
-					type="text"
-					placeholder="Enter zipcode"
-					value={zipcode}
-					onChange={(event) => {
-						setZipcode(event.target.value);
-						validate(event.target.value);
+			<input
+				type="text"
+				placeholder="Enter zipcode"
+				value={zipcode}
+				onChange={(event) => {
+					setZipcode(event.target.value);
+					validate(event.target.value);
+					event.preventDefault();
+				}}
+				onKeyDown={(event) => {
+					if (event.key === 'Enter') {
 						event.preventDefault();
-					}}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							event.preventDefault();
-							handleConvertClick();
-						}
-					}}
-					maxLength={5}
-				/>
-				<button
-					type="submit"
-					id="check"
-					onClick={() => {
 						handleConvertClick();
-						setHourly(true);
-					}}
-					className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 my-4 disabled:bg-red-200 rounded-full`}
-					disabled={!isValidZipcode}
-				>
-					<i className="fas fa-cloud-sun-rain text-sm text-white"></i>
-				</button>
-			</form>
+					}
+				}}
+				maxLength={5}
+			/>
+			<button
+				type="submit"
+				id="check"
+				onClick={() => {
+					handleConvertClick();
+					setHourly(true);
+				}}
+				className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 my-4 disabled:bg-red-200 rounded-full`}
+				disabled={!isValidZipcode}
+			>
+				<i className="fas fa-cloud-sun-rain text-sm text-white"></i>
+			</button>
 		</div>
 	);
 };
