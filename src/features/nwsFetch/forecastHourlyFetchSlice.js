@@ -3,9 +3,9 @@ import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 const email = process.env.REACT_APP_DEV_EMAIL;
 
 export const fetchForecastHourly = createAsyncThunk('forecastHourly/fetchForecastHourly', async (url) => {
-	const maxTries = 3;
+	const maxTries = 6;
 	let tries = 0;
-	const retryDelay = 5000;
+	const retryDelay = 1000;
 
 	while (tries < maxTries) {
 		try {
