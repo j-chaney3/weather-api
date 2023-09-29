@@ -97,7 +97,7 @@ const CoordinatesConverter = ({ setHourly }) => {
 						handleConvertClick();
 						setHourly(true);
 					}}
-					className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-4 disabled:bg-red-200 rounded-full`}
+					className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 my-4 disabled:bg-red-200 rounded-full`}
 					disabled={!isValidZipcode}
 				>
 					<i className="fas fa-cloud-sun-rain text-sm text-white"></i>
