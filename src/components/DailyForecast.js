@@ -8,6 +8,7 @@ import { isFirefox } from 'react-device-detect';
 //imported functions
 import { formatTime, formatDate } from '../utilities/dateTimeFormat';
 import { urlSubstring } from '../utilities/urlSubString';
+import { humidity } from '../utilities/humidity';
 
 const DailyForecast = () => {
 	const dispatch = useDispatch();
@@ -114,7 +115,7 @@ const DailyForecast = () => {
 													: 0}
 												%
 											</p>
-											<p>Humidity: {period.relativeHumidity.value}%</p>
+											<p>{humidity(period.temperature, period.dewpoint.value)}</p>
 										</div>
 										<div className="relative text-center text-black-400 text-sm font-semibold justify-items-center m-2">
 											<div className="flex items-center">
