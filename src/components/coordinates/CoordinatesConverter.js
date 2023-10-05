@@ -32,9 +32,9 @@ const CoordinatesConverter = ({ setHourly }) => {
 			<NavigatorCoords />
 			<div className="flex items-center justify-center">
 				<input
-					className="w-1/4 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+					className="w-1/2 md:w-1/4 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
 					type="text"
-					placeholder="Enter zipcode"
+					placeholder="Zipcode"
 					value={zipcode}
 					onChange={(event) => {
 						setZipcode(event.target.value);
