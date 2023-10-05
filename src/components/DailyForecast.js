@@ -121,7 +121,7 @@ const DailyForecast = () => {
 											<div className="flex items-center">
 												<p className="text-md text-left">
 													{' '}
-													<span className="font-bold">Forecast:</span> {period.shortForecast}.{' '}
+													<span className="font-bold">Forecast:</span>
 													{period.detailedForecast}
 												</p>
 												<p className="justify-items-center"></p>
