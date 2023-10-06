@@ -1,8 +1,8 @@
-import { formatTime, formatDate } from '../../utilities/dateTimeFormat';
-import { urlSubstring } from '../../utilities/urlSubString';
-import { humidity } from '../../utilities/humidity';
+import { formatTime, formatDate } from '../../../utilities/dateTimeFormat';
+import { urlSubstring } from '../../../utilities/urlSubString';
+import { humidity } from '../../../utilities/humidity';
 
-const WeatherCard = ({ period }) => {
+const DailyWeatherCard = ({ period }) => {
 	return (
 		<div className="flex items-center justify-center">
 			<div className="container mx-auto px-10 mb-5">
@@ -52,4 +52,4 @@ const WeatherCard = ({ period }) => {
 	);
 };
 
-export default WeatherCard;
+export default DailyWeatherCard;

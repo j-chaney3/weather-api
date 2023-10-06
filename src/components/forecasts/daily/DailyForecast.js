@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNWSPoints } from '../../features/nwsFetch/nwsFetchSlice';
-import { fetchForecastDaily } from '../../features/nwsFetch/forecastDailyFetchSlice';
-import { selectDaily } from '../../features/nwsFetch/forecastDailyFetchSlice';
+import { fetchNWSPoints } from '../../../features/nwsFetch/nwsFetchSlice';
+import { fetchForecastDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
+import { selectDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
 import { isFirefox } from 'react-device-detect';
-import WeatherCard from './WeatherCard';
+import DailyWeatherCard from './DailyWeatherCard';
 
 //imported functions
-import { formatTime, formatDate } from '../../utilities/dateTimeFormat';
+import { formatTime, formatDate } from '../../../utilities/dateTimeFormat';
 
 const DailyForecast = () => {
 	const dispatch = useDispatch();
@@ -91,7 +91,7 @@ const DailyForecast = () => {
 
 				<div className="grid grid-cols-1 gap-3">
 					{daily.map((period, index) => (
-						<WeatherCard key={index} period={period} />
+						<DailyWeatherCard key={index} period={period} />
 					))}
 				</div>
 			</div>
