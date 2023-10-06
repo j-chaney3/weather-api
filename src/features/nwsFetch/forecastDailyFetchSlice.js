@@ -48,23 +48,24 @@ export const forecastDailySlice = createSlice({
 	name: 'forecastDaily',
 	initialState,
 	reducers: {},
-	extraReducers: {
-		[fetchForecastDaily.pending]: (state) => {
-			state.loading = true;
-			state.err = false;
-		},
-		[fetchForecastDaily.fulfilled]: (state, action) => {
-			state.isLoading = false;
-			state.err = false;
-			state.errMsg = '';
-			state.updated = action.payload.updated;
-			state.periods = action.payload.periods;
-		},
-		[fetchForecastDaily.rejected]: (state, action) => {
-			state.isLoading = false;
-			state.err = true;
-			state.errMsg = action.err ? action.error.errMsg : 'Fetch failed';
-		},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchForecastDaily.pending, (state) => {
+				state.loading = true;
+				state.err = false;
+			})
+			.addCase(fetchForecastDaily.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.err = false;
+				state.errMsg = '';
+				state.updated = action.payload.updated;
+				state.periods = action.payload.periods;
+			})
+			.addCase(fetchForecastDaily.rejected, (state, action) => {
+				state.isLoading = false;
+				state.err = true;
+				state.errMsg = action.error ? action.error.errMsg : 'Fetch failed';
+			});
 	},
 });
 

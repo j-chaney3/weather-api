@@ -51,27 +51,27 @@ export const NWSSlice = createSlice({
 	name: 'NWSPoints',
 	initialState,
 	reducers: {},
-	extraReducers: {
-		[fetchNWSPoints.pending]: (state) => {
-			state.isLoading = true;
-		},
-		[fetchNWSPoints.fulfilled]: (state, action) => {
-			state.isLoading = false;
-			state.errMsg = '';
-			state.gridId = action.payload.gridId;
-			state.gridX = action.payload.gridX;
-			state.gridY = action.payload.gridY;
-			state.forecast = action.payload.forecast;
-			state.forecastHourly = action.payload.forecastHourly;
-			state.city = action.payload.relativeLocation.properties.city;
-			state.state = action.payload.relativeLocation.properties.state;
-		},
-		[fetchNWSPoints.rejected]: (state, action) => {
-			state.isLoading = false;
-			state.errMsg = action.error ? action.error.message : 'Fetch failed';
-		},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchNWSPoints.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(fetchNWSPoints.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.errMsg = '';
+				state.gridId = action.payload.gridId;
+				state.gridX = action.payload.gridX;
+				state.gridY = action.payload.gridY;
+				state.forecast = action.payload.forecast;
+				state.forecastHourly = action.payload.forecastHourly;
+				state.city = action.payload.relativeLocation.properties.city;
+				state.state = action.payload.relativeLocation.properties.state;
+			})
+			.addCase(fetchNWSPoints.rejected, (state, action) => {
+				state.isLoading = false;
+				state.errMsg = action.error ? action.error.message : 'Fetch failed';
+			});
 	},
 });
-
 export const { setPoints } = NWSSlice.actions;
 export const NWSReducer = NWSSlice.reducer;

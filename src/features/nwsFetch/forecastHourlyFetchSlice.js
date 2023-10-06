@@ -49,22 +49,23 @@ export const forecastHourlySlice = createSlice({
 	name: 'forecastHourly',
 	initialState,
 	reducers: {},
-	extraReducers: {
-		[fetchForecastHourly.pending]: (state) => {
-			state.isLoading = true;
-		},
-		[fetchForecastHourly.fulfilled]: (state, action) => {
-			state.isLoading = false;
-			state.errMsg = '';
-			state.updated = action.payload.updated;
-			state.periods = action.payload.periods;
-			state.temps = action.payload.periods.temperature;
-		},
-		[fetchForecastHourly.rejected]: (state, action) => {
-			state.isLoading = false;
-			state.err = true;
-			state.errMsg = action.err ? action.error.message : 'Fetch Failed';
-		},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchForecastHourly.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(fetchForecastHourly.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.errMsg = '';
+				state.updated = action.payload.updated;
+				state.periods = action.payload.periods;
+				state.temps = action.payload.periods.temperature;
+			})
+			.addCase(fetchForecastHourly.rejected, (state, action) => {
+				state.isLoading = false;
+				state.err = true;
+				state.errMsg = action.error ? action.error.message : 'Fetch Failed';
+			});
 	},
 });
 
@@ -74,6 +75,7 @@ export const select24hours = createSelector([selectPeriods], (periods) => period
 export const selectTemps = createSelector([selectPeriods], (periods) =>
 	periods.slice(0, 24).map((period) => period.temperature)
 );
+export const selectCurrent = createSelector([selectPeriods], (periods) => periods[0]);
 
 export const { setGridPoints } = forecastHourlySlice.actions;
 export const forecastHourlyReducer = forecastHourlySlice.reducer;
