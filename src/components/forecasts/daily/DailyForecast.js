@@ -4,7 +4,6 @@ import { fetchNWSPoints } from '../../../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
 import { selectTemps } from '../../../features/nwsFetch/forecastHourlyFetchSlice';
 import { selectDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
-import { isFirefox } from 'react-device-detect';
 import DailyWeatherCard from './DailyWeatherCard';
 import CurrentWeather from '../current/CurrentWeather';
 
