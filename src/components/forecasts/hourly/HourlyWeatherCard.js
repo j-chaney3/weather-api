@@ -1,4 +1,4 @@
-import { formatTime, formatDate } from '../../../utilities/dateTimeFormat';
+import { formatTime } from '../../../utilities/dateTimeFormat';
 import { urlSubstring } from '../../../utilities/urlSubString';
 import { humidity } from '../../../utilities/humidity';
 
@@ -34,9 +34,9 @@ const HourlyWeatherCard = ({ period }) => {
 								<p className="text-md text-left">
 									{' '}
 									<span className="font-bold">Forecast{': '} </span>
-									{period.detailedForecast}
+									{period.shortForecast}.
 								</p>
-								<p className="justify-items-center"></p>
+								<p className="ml-1">{'Wind, ' + period.windSpeed + ' ' + period.windDirection + '.'}</p>
 							</div>
 						</div>
 
