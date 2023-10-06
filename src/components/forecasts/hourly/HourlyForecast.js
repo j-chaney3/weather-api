@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNWSPoints } from '../../../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastHourly, select24hours, selectTemps } from '../../../features/nwsFetch/forecastHourlyFetchSlice';
-import { isFirefox } from 'react-device-detect';
 import HourlyWeatherCard from './HourlyWeatherCard';
+import CurrentWeather from '../current/CurrentWeather';
 
 //imported functions
 import { lowHigh } from '../../../utilities/lowHigh';
-import { formatDate, formatTime } from '../../../utilities/dateTimeFormat';
 
 const HourlyForecast = () => {
 	const dispatch = useDispatch();
@@ -46,15 +45,9 @@ const HourlyForecast = () => {
 	const { low, high } = lowHigh(tempArray);
 
 	if (!latitude && !longitude && !err) {
-		if (!isFirefox) {
-			return <div>Please enter your zipcode to see the current forecast.</div>;
-		} else {
-			return (
-				<div>
-					Browser Location data not currently available. Please enter your zipcode to see current forecast.
-				</div>
-			);
-		}
+		return (
+			<div>Browser Location data not currently available. Please enter your zipcode to see current forecast.</div>
+		);
 	} else if (err) {
 		return (
 			<div>
@@ -81,18 +74,16 @@ const HourlyForecast = () => {
 
 	return (
 		<div>
-			<h1 className="font-bold">
-				{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
-			</h1>
-			<h2 className="font-semibold">
-				Updated at: {formatDate(updated)}, {formatTime(updated)}
-			</h2>
-			<p>Latitude: {latitude || 'N/A'}</p>
-			<p>Longitude: {longitude || 'N/A'}</p>
-
-			<div className="m-3 text-sm">
-				Today's Temperatures - Low: {low} °F / High: {high} °F
-			</div>
+			<CurrentWeather
+				city={city}
+				state={state}
+				zipcode={zipcode}
+				updated={updated}
+				latitude={latitude}
+				longitude={longitude}
+				high={high}
+				low={low}
+			/>
 
 			<div className="grid grid-cols-1 gap-3">
 				{hourly.map((period, index) => (

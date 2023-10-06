@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNWSPoints } from '../../../features/nwsFetch/nwsFetchSlice';
 import { fetchForecastDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
+import { selectTemps } from '../../../features/nwsFetch/forecastHourlyFetchSlice';
 import { selectDaily } from '../../../features/nwsFetch/forecastDailyFetchSlice';
 import { isFirefox } from 'react-device-detect';
 import DailyWeatherCard from './DailyWeatherCard';
+import CurrentWeather from '../current/CurrentWeather';
 
 //imported functions
-import { formatTime, formatDate } from '../../../utilities/dateTimeFormat';
+import { lowHigh } from '../../../utilities/lowHigh';
 
 const DailyForecast = () => {
 	const dispatch = useDispatch();
@@ -43,17 +45,15 @@ const DailyForecast = () => {
 
 	const daily = useSelector(selectDaily);
 
+	const tempArray = useSelector(selectTemps);
+	const { low, high } = lowHigh(tempArray);
+
 	if (!latitude && !longitude && !err) {
-		if (!isFirefox) {
-			return <div>Please enter your zipcode to see the current forecast.</div>;
-		} else {
-			return (
-				<div>
-					Browser Location data not currently available. Please enter your zipcode to see current forecast.
-				</div>
-			);
-		}
-	} else if (err) {
+		return (
+			<div>Browser Location data not currently available. Please enter your zipcode to see current forecast.</div>
+		);
+	}
+	if (err) {
 		return (
 			<div>
 				Error fetching forecast: <p className="text-red-600 inline-block font-bold">{errMsg}! </p>
@@ -78,16 +78,16 @@ const DailyForecast = () => {
 	} else {
 		return (
 			<div>
-				<div>
-					<h1 className="font-bold">
-						{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
-					</h1>
-					<h2 className="font-semibold">
-						Updated at: {formatDate(updated)}, {formatTime(updated)}
-					</h2>
-					<p>Latitude: {latitude || 'N/A'}</p>
-					<p className="mb-3">Longitude: {longitude || 'N/A'}</p>
-				</div>
+				<CurrentWeather
+					city={city}
+					state={state}
+					zipcode={zipcode}
+					updated={updated}
+					latitude={latitude}
+					longitude={longitude}
+					high={high}
+					low={low}
+				/>
 
 				<div className="grid grid-cols-1 gap-3">
 					{daily.map((period, index) => (
