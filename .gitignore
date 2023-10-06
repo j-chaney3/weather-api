@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /express/node_modules
+/express/index.js
 
 /.pnp
 .pnp.js
@@ -10,8 +11,10 @@
 # testing
 /coverage
 
+
 # production
 /build
+/functions
 
 # misc
 .DS_Store
@@ -20,6 +23,11 @@
 .env.test.local
 .env.production.local
 .env
+.firebaserc
+.firebase
+firebase.json
+.gcloudignore
+
 
 npm-debug.log*
 yarn-debug.log*
