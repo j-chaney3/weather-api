@@ -36,6 +36,7 @@ const CoordinatesConverter = ({ setHourly }) => {
 					type="text"
 					placeholder="Zipcode"
 					value={zipcode}
+					name="zipcode"
 					onChange={(event) => {
 						setZipcode(event.target.value);
 						validate(event.target.value);
