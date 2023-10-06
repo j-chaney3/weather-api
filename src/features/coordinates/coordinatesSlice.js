@@ -58,35 +58,5 @@ export const coordinatesSlice = createSlice({
 	},
 });
 
-// export const coordinatesSlice = createSlice({
-// 	name: 'coordinates',
-// 	initialState,
-// 	reducers: {
-// 		updateGeolocationCoordinates: (state, action) => {
-// 			state.latitude = action.payload.latitude;
-// 			state.longitude = action.payload.longitude;
-// 		},
-// 	},
-// 	extraReducers: {
-// 		[fetchCoordinates.pending]: (state) => {
-// 			state.err = false;
-// 			state.isLoading = true;
-// 		},
-// 		[fetchCoordinates.fulfilled]: (state, action) => {
-// 			state.isLoading = false;
-// 			state.err = false;
-// 			state.errMsg = '';
-// 			state.latitude = action.payload.lat;
-// 			state.longitude = action.payload.lng;
-// 			state.zipcode = action.meta.arg;
-// 		},
-// 		[fetchCoordinates.rejected]: (state, action) => {
-// 			state.err = true;
-// 			state.isLoading = false;
-// 			state.errMsg = action.payload?.status === 400 ? 'An error occured, try again later.' : 'Invalid Zipcode';
-// 		},
-// 	},
-// });
-
 export const { setCoordinates, updateGeolocationCoordinates } = coordinatesSlice.actions;
 export const coordinatesReducer = coordinatesSlice.reducer;
