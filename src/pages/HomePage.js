@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CoordinatesConverter from '../components/coordinates/CoordinatesConverter';
-import DailyForecast from '../components/forecasts/DailyForecast';
-import HourlyForecast from '../components/forecasts/HourlyForecast';
+import DailyForecast from '../components/forecasts/daily/DailyForecast';
+import HourlyForecast from '../components/forecasts/hourly/HourlyForecast';
 import HourlyDailyButtons from '../components/HourlyDailyButtons';
 
 const HomePage = () => {
