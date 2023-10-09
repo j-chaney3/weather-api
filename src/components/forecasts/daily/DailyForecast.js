@@ -47,54 +47,56 @@ const DailyForecast = () => {
 	const tempArray = useSelector(selectTemps);
 	const { low, high } = lowHigh(tempArray);
 
-	if (!latitude && !longitude && !err) {
-		return (
-			<div>Browser Location data not currently available. Please enter your zipcode to see current forecast.</div>
-		);
-	}
-	if (err) {
-		return (
-			<div>
-				Error fetching forecast: <p className="text-red-600 inline-block font-bold">{errMsg}! </p>
-			</div>
-		);
-	} else if (isLoading || isLoadingForecast) {
-		return (
-			<div>
-				<div
-					className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
-					role="status"
-				/>
-				<p className="text-black text-s font-semibold">Loading...</p>
-			</div>
-		);
-	} else if (failedLoadingForecast) {
-		return (
-			<div>
-				<p>Currently unable to get forecast data, retry soon.</p>
-			</div>
-		);
-	} else {
-		return (
-			<div>
-				<CurrentWeather
-					city={city}
-					state={state}
-					zipcode={zipcode}
-					updated={updated}
-					latitude={latitude}
-					longitude={longitude}
-					high={high}
-					low={low}
-				/>
-
-				<div className="grid grid-cols-1 gap-3">
-					{daily.map((period, index) => (
-						<DailyWeatherCard key={index} period={period} />
-					))}
+	switch (true) {
+		case !latitude && !longitude && !err:
+			return (
+				<div>
+					Browser Location data not currently available. Please enter your zipcode to see the current
+					forecast.
 				</div>
-			</div>
-		);
+			);
+		case err:
+			return (
+				<div>
+					Error fetching forecast: <p className="text-red-600 inline-block font-bold">{errMsg}!</p>
+				</div>
+			);
+		case isLoading || isLoadingForecast:
+			return (
+				<div>
+					<div
+						className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+						role="status"
+					/>
+					<p className="text-black text-s font-semibold">Loading...</p>
+				</div>
+			);
+		case failedLoadingForecast:
+			return (
+				<div>
+					<p>Currently unable to get forecast data, retry soon.</p>
+				</div>
+			);
+		default:
+			return (
+				<div>
+					<CurrentWeather
+						city={city}
+						state={state}
+						zipcode={zipcode}
+						updated={updated}
+						latitude={latitude}
+						longitude={longitude}
+						high={high}
+						low={low}
+					/>
+					<div className="grid grid-cols-1 gap-3">
+						{daily.map((period, index) => (
+							<DailyWeatherCard key={index} period={period} />
+						))}
+					</div>
+				</div>
+			);
 	}
 };
 
