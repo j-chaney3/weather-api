@@ -35,8 +35,8 @@ const HourlyWeatherCard = ({ period }) => {
 									{' '}
 									<span className="font-bold">Forecast{': '} </span>
 									{period.shortForecast}.
+									{' Wind, ' + period.windSpeed + ' ' + period.windDirection + '.'}
 								</p>
-								<p className="ml-1">{'Wind, ' + period.windSpeed + ' ' + period.windDirection + '.'}</p>
 							</div>
 						</div>
 
