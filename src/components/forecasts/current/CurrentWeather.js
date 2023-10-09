@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 const CurrentWeather = ({ city, state, zipcode, updated, latitude, longitude, high, low }) => {
 	const current = useSelector(selectCurrent);
+	const { forecastType } = useSelector((state) => state.setForecastType);
 
 	return (
 		<div>
 			<h1 className="font-bold">
-				{city}, {state} {zipcode ? ` - ${zipcode}` : ''}
+				{city}, {state} {zipcode ? ` - ${zipcode}` : ''} | {forecastType + ' forecast'}
 			</h1>
 			<div className="inline-block">
 				<p className="italic text-sm">
