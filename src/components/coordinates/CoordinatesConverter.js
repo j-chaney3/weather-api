@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCoordinates } from '../../features/coordinates/coordinatesSlice';
+import { setHourlyForecast } from '../../features/forecastType/forecastTypeSlice';
 
 import NavigatorCoords from './NavigatorCoords';
 
-const CoordinatesConverter = ({ setHourly }) => {
+const CoordinatesConverter = () => {
 	const dispatch = useDispatch();
 	const [zipcode, setZipcode] = useState('');
 	const [isValidZipcode, setIsValidZipcode] = useState(false);
@@ -46,6 +47,7 @@ const CoordinatesConverter = ({ setHourly }) => {
 						if (event.key === 'Enter') {
 							event.preventDefault();
 							handleConvertClick();
+							dispatch(setHourlyForecast());
 						}
 					}}
 					maxLength={5}
@@ -55,7 +57,7 @@ const CoordinatesConverter = ({ setHourly }) => {
 					id="check"
 					onClick={() => {
 						handleConvertClick();
-						setHourly(true);
+						dispatch(setHourlyForecast());
 					}}
 					className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 mx-2 my-4 disabled:bg-red-200 rounded-full`}
 					disabled={!isValidZipcode}
