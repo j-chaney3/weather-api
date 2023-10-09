@@ -32,11 +32,15 @@ const CoordinatesConverter = () => {
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-1 container py-2 px-1 mx-3">
 			<NavigatorCoords />
 			<div className="flex items-center justify-center">
+				<label for="zipcode" className="pr-2">
+					(US):
+				</label>
 				<input
 					className="w-1/2 md:w-1/4 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
 					type="text"
 					placeholder="Zipcode"
 					value={zipcode}
+					id="zicode"
 					name="zipcode"
 					onChange={(event) => {
 						setZipcode(event.target.value);
