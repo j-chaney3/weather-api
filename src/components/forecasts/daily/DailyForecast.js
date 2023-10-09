@@ -21,7 +21,7 @@ const DailyForecast = () => {
 	useEffect(() => {
 		if (latitude && longitude) {
 			const cString = latitude.toFixed(4) + ',' + longitude.toFixed(4);
-			console.log('Truncated zipcode coordinates:' + cString);
+			console.log('Received coordinates:' + cString);
 			dispatch(fetchNWSPoints(cString));
 		}
 	}, [dispatch, latitude, longitude]);
