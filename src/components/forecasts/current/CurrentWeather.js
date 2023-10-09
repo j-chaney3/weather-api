@@ -6,14 +6,27 @@ const CurrentWeather = ({ city, state, zipcode, updated, latitude, longitude, hi
 	const current = useSelector(selectCurrent);
 	const { forecastType } = useSelector((state) => state.setForecastType);
 
+	let selectedForecast;
+	switch (forecastType) {
+		case 'hourly':
+			selectedForecast = 'Hourly Forecast';
+			break;
+		case 'daily':
+			selectedForecast = 'Daily Forecast';
+			break;
+		default:
+			selectedForecast = '';
+			break;
+	}
+
 	return (
 		<div>
 			<h1 className="font-bold">
-				{city}, {state} {zipcode ? ` - ${zipcode}` : ''} | {forecastType + ' forecast'}
+				{city}, {state} | {selectedForecast}
 			</h1>
 			<div className="inline-block">
 				<p className="italic text-sm">
-					{formatDate(updated)}, {formatTime(updated)}
+					Updated at: {formatDate(updated)}, {formatTime(updated)}
 				</p>
 			</div>
 			<div>
