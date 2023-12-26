@@ -32,7 +32,7 @@ const CoordinatesConverter = () => {
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-1 container py-2 px-1 mx-3">
 			<NavigatorCoords />
 			<div className="flex items-center justify-center">
-				<label for="zipcode" className="pr-2">
+				<label htmlFor="zipcode" className="pr-2">
 					(US):
 				</label>
 				<input
@@ -40,7 +40,7 @@ const CoordinatesConverter = () => {
 					type="text"
 					placeholder="Zipcode"
 					value={zipcode}
-					id="zicode"
+					id="zipcode"
 					name="zipcode"
 					onChange={(event) => {
 						setZipcode(event.target.value);
@@ -49,9 +49,15 @@ const CoordinatesConverter = () => {
 					}}
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
-							event.preventDefault();
-							handleConvertClick();
-							dispatch(setHourlyForecast());
+							if (!isValidZipcode) {
+								event.preventDefault();
+							} else {
+								// Valid input, perform the action
+								setZipcode(event.target.value);
+								event.preventDefault();
+								handleConvertClick();
+								dispatch(setHourlyForecast());
+							}
 						}
 					}}
 					maxLength={5}

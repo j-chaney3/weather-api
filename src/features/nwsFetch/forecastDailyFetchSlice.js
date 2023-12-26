@@ -2,39 +2,42 @@ import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 
 const email = process.env.REACT_APP_DEV_EMAIL;
 
-export const fetchForecastDaily = createAsyncThunk(`forecastDaily/fetchForecastDaily`, async (url) => {
-	const maxTries = 6;
-	let tries = 0;
-	const retryDelay = 1000;
+export const fetchForecastDaily = createAsyncThunk(
+	`forecastDaily/fetchForecastDaily`,
+	async (url) => {
+		const maxTries = 6;
+		let tries = 0;
+		const retryDelay = 1000;
 
-	while (tries < maxTries) {
-		try {
-			const userAgent = `https://nws-forecast-8af4a.web.app/, ${email}`;
-			const headers = new Headers();
+		while (tries < maxTries) {
+			try {
+				const userAgent = `https://nws-forecast-8af4a.web.app/, ${email}`;
+				const headers = new Headers();
 
-			headers.append('User-Agent', userAgent);
-			const response = await fetch(`${url}`, {
-				headers: headers,
-			});
-			if (!response.ok) {
-				if (response.status === 500) {
-					tries += 1;
-					if (tries < maxTries) {
-						await new Promise((resolve) => setTimeout(resolve, retryDelay));
+				headers.append('User-Agent', userAgent);
+				const response = await fetch(`${url}`, {
+					headers: headers,
+				});
+				if (!response.ok) {
+					if (response.status === 500) {
+						tries += 1;
+						if (tries < maxTries) {
+							await new Promise((resolve) => setTimeout(resolve, retryDelay));
+						}
+						continue;
+					} else {
+						throw new Error('Network Response not okay');
 					}
-					continue;
-				} else {
-					throw new Error('Network Response not okay');
 				}
-			}
 
-			const data = await response.json();
-			return data.properties;
-		} catch (error) {
-			throw error;
+				const data = await response.json();
+				return data.properties;
+			} catch (error) {
+				throw error;
+			}
 		}
 	}
-});
+);
 
 const initialState = {
 	isLoading: true,
