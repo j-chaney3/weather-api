@@ -29,7 +29,9 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"deploy": "firebase deploy --only hosting",
+		"deploy-functions": "gcloud functions deploy first-function --runtime nodejs18 --trigger-http --entry-point app"
 	},
 	"eslintConfig": {
 		"extends": [
